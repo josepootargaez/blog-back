@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { BlogModule } from './modules/blog/blog.module';
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/blogDB'),
+    MongooseModule.forRoot(process.env.MONGO_URI),
     BlogModule
   ],
   controllers: [],
