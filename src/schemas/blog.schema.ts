@@ -14,7 +14,7 @@ export type BlogDocument = HydratedDocument<Blog>;
 @Schema()
 export class Blog {
   @Prop({ required: true })
-  tittle: string;
+  title: string;
 
   @Prop({ required: true })
   author: string;

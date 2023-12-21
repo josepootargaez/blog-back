@@ -1,5 +1,5 @@
 export interface Blog {
-    tittle: String,
+    title: String,
     author: String,
     date: String,
     content: String,
