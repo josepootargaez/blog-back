@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ErrorExcept } from 'src/exceptions/enums/enumExceptions';
@@ -8,7 +8,17 @@ import { response } from 'src/models/response.mode';
 export class BlogService {
   constructor(@InjectModel('Blog') private readonly BlogModel: Model<Blog>) {}
     async findAll() {
-        return this.BlogModel.find().exec();
+        try {
+          return await this.BlogModel.find().exec();
+        } catch (error) {
+          Logger.error(error.message,error)
+          throw new HttpException({
+            status:HttpStatus.BAD_REQUEST,
+            error:error.message,
+            message:error.message
+          }, HttpStatus.BAD_REQUEST,
+          )
+        }
       }
       async create(createCatDto:Blog ): Promise<response> {
 
@@ -28,7 +38,7 @@ export class BlogService {
             status = HttpStatus.UNPROCESSABLE_ENTITY;
             errorText =ErrorExcept.Validations;
           }
-          
+          Logger.error(error.message,error)
           throw new HttpException({
             status,
             error:errorText,
