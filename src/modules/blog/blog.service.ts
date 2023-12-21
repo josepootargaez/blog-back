@@ -11,7 +11,7 @@ export class BlogService {
         try {
           const data = await this.BlogModel.find().exec();
           const obj:response={
-            succes:true,
+            success:true,
             status:HttpStatus.OK,
             data,
           }
@@ -32,7 +32,7 @@ export class BlogService {
           const createdBlog = new this.BlogModel(createCatDto);
           const result:Blog = await createdBlog.save();
           const obj:response={
-            succes:true,
+            success:true,
             status:HttpStatus.CREATED,
             data:result,
           }

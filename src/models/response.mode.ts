@@ -3,5 +3,5 @@ export interface response {
     data ?: object,
     error?: String,
     message?: String,
-    succes?: boolean,
+    success?: boolean,
   }
