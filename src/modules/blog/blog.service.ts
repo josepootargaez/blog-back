@@ -9,7 +9,13 @@ export class BlogService {
   constructor(@InjectModel('Blog') private readonly BlogModel: Model<Blog>) {}
     async findAll() {
         try {
-          return await this.BlogModel.find().exec();
+          const data = await this.BlogModel.find().exec();
+          const obj:response={
+            succes:true,
+            status:HttpStatus.OK,
+            data,
+          }
+          return obj
         } catch (error) {
           Logger.error(error.message,error)
           throw new HttpException({
