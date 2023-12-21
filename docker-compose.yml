@@ -1,9 +1,9 @@
 version: '3'
 services:
   node-app:
-    image: node:16
+    build: .
     container_name: blog-back
-    working_dir: /src
+    restart: always
     ports:
       - "3004:3004"
     volumes:
@@ -12,11 +12,10 @@ services:
       - mongo
     environment:
       - MONGO_URI=mongodb://mongo:27017/blogDB
-      
-    command: npm start
 
   mongo:
     image: mongo
     container_name: mi_mongo
+    restart: always
     ports:
       - "27017:27017"
