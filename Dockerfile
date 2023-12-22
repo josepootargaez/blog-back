@@ -14,10 +14,10 @@ RUN npm install
 COPY . .
 
 # Compila la aplicación (si estás utilizando TypeScript)
-RUN npm run build
+# RUN npm run build
 
 # Expone el puerto 3000 en el contenedor
 EXPOSE 3000
 
 # Comando para ejecutar la aplicación
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
