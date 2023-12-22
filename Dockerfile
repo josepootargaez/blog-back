@@ -12,7 +12,7 @@ COPY tsconfig*.json ./
 RUN npm install
 # Copia el resto de los archivos de la aplicación
 COPY . .
-
+RUN npm run build
 # Compila la aplicación (si estás utilizando TypeScript)
 # RUN npm run build
 
@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 3000
 
 # Comando para ejecutar la aplicación
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:prod"]
