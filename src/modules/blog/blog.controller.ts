@@ -19,4 +19,9 @@ export class blogController {
         const result = await this.appService.create(body);
         return result
   }
+
+  @Get('')
+  async get()  {
+        return "server listen"
+  }
 }
