@@ -14,8 +14,8 @@ async function bootstrap() {
   };
   app.use(morgan('tiny'))
   app.enableCors(corsOptions);
-  const port = process?.env?.PORT_SERVER ? process.env.PORT_SERVER : 3005
-  await app.listen(port);
+  const port = process?.env?.PORT_SERVER ? process.env.PORT_SERVER : 3000
+  await app.listen(port,"0.0.0.0");
   Logger.log(`connected to port ${port}`)
 }
 bootstrap();
