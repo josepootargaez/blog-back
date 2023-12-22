@@ -12,7 +12,7 @@
   ],
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/dist/index.js" }
+    { "src": "/.*", "dest": "/dist/main.js" }
   ],
   "env": {
     "NODE_ENV": "production"
