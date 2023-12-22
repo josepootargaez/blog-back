@@ -5,7 +5,7 @@ services:
     container_name: blog-back
     restart: always
     ports:
-      - "3000:3000"
+      - "4000:4000"
     volumes:
       - ./src:/usr/app/
     depends_on:
