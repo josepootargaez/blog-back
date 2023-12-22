@@ -27,7 +27,7 @@ This project was generated with Nest JS
 ## Optional Install server
 * **install package**
     `npm install`
-Run `npm start ` for a dev server. Navigate to `http://localhost:4000/`. The application will automatically reload if you change any of the source files.
+Run `npm start ` for a dev server. Navigate to `http://localhost:4000/`
 
 
 ## Build
