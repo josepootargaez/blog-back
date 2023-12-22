@@ -6,8 +6,7 @@ This project was generated with Nest JS
  clone the repository
 
 ###  Repository
-git clone https://github.com/josepootargaez/blog-back.git
-cd web-scrapping-front
+  git clone https://github.com/josepootargaez/blog-back.git
 
 ## Technical specifications of the environment
 
@@ -17,13 +16,15 @@ cd web-scrapping-front
 * **@nestjs/cli** - ` "^v9.0.0`
 
 
-## Development by Docker
+## Install by Docker
   ### required Docker
   
-  docker-compose up --build
+    docker-compose up --build
   * **Server Listen port 4000**
 
-## Optional Development server
+
+
+## Optional Install server
 * **install package**
     `npm install`
 Run `npm start ` for a dev server. Navigate to `http://localhost:4000/`. The application will automatically reload if you change any of the source files.
