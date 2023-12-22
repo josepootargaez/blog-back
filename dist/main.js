@@ -16,7 +16,7 @@ async function bootstrap() {
     };
     app.use(morgan('tiny'));
     app.enableCors(corsOptions);
-    const port = ((_a = process === null || process === void 0 ? void 0 : process.env) === null || _a === void 0 ? void 0 : _a.PORT_SERVER) ? process.env.PORT_SERVER : 3000;
+    const port = ((_a = process === null || process === void 0 ? void 0 : process.env) === null || _a === void 0 ? void 0 : _a.PORT_SERVER) ? process.env.PORT_SERVER : 4000;
     await app.listen(port, "0.0.0.0");
     common_1.Logger.log(`connected to port ${port}`);
 }
