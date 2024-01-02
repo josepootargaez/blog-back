@@ -1,15 +1,17 @@
-import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Injectable, HttpException, HttpStatus, Logger, BadRequestException } from '@nestjs/common';
 import { ErrorExcept } from 'src/exceptions/enums/enumExceptions';
-import { Blog } from 'src/models/blog.model';
 import { response } from 'src/models/response.mode';
+import { DatabaseService } from '../../database/database.service';
+import { RegistroDto } from 'src/utils/validator/blog.dto';
+import { ValidationError, validate } from 'class-validator';
+import { plainToClass } from 'class-transformer';
 @Injectable()
 export class BlogService {
-  constructor(@InjectModel('Blog') private readonly BlogModel: Model<Blog>) {}
+  constructor(private readonly databaseService: DatabaseService) {}
     async findAll() {
         try {
-          const data = await this.BlogModel.find().exec();
+          let  data =  await this.databaseService.query('SELECT * FROM blogPost');
+          data =   data.recordset
           const obj:response={
             success:true,
             status:HttpStatus.OK,
@@ -26,15 +28,30 @@ export class BlogService {
           )
         }
       }
-      async create(createCatDto:Blog ): Promise<response> {
+      async create(createCatDto:RegistroDto ): Promise<response> {
 
         try {
-          const createdBlog = new this.BlogModel(createCatDto);
-          const result:Blog = await createdBlog.save();
+          const dtoInstance = plainToClass(RegistroDto, createCatDto);
+          const errors: ValidationError[] = await validate(dtoInstance, { skipMissingProperties: false });
+          if (errors.length > 0) {
+            const errorMessage = this.formatValidationErrors(errors);
+            throw new Error(errorMessage);
+          }
+
+          const { title, author,content,date } = createCatDto;
+          const queryString = 'INSERT INTO blogPost (title, author,content,date) VALUES (@titulo, @autor, @contenido, @fecha)';
+          const params = [
+            { name: 'titulo', value: title },
+            { name: 'autor', value: author },
+            { name: 'contenido', value: content },
+            { name: 'fecha', value: date },
+          ];
+          await this.databaseService.query(queryString, params);
+          
           const obj:response={
             success:true,
             status:HttpStatus.CREATED,
-            data:result,
+            data:{},
           }
           return obj
         } catch (error) {
@@ -53,5 +70,13 @@ export class BlogService {
           )
         }
         
+      }
+      private formatValidationErrors(errors: ValidationError[]): string {
+        return errors
+          .map(error => {
+            const constraints = Object.values(error.constraints).join(', ');
+            return `(${error.property} - ${constraints})`;
+          })
+          .join('\n ');
       }
 }

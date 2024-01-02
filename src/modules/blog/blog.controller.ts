@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BlogService } from './blog.service';
 import { Blog } from 'src/models/blog.model';
 import { response } from 'src/models/response.mode';
+import { RegistroDto } from 'src/utils/validator/blog.dto';
 
 @Controller({
 	path: "/",
@@ -15,7 +16,7 @@ export class blogController {
     return this.appService.findAll();
   }
   @Post('blog')
-  async postBlog(@Body() body:Blog) : Promise<response>  {
+  async postBlog(@Body() body:RegistroDto) : Promise<response>  {
         const result = await this.appService.create(body);
         return result
   }
