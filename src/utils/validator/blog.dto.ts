@@ -15,5 +15,5 @@ export class RegistroDto {
 
   @IsNotEmpty({ message: 'date is required' })
   @IsString({ message: 'date must be String' })
-  date: Date;
+  date: string;
 }
