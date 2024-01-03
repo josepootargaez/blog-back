@@ -15,7 +15,16 @@ This project was generated with Nest JS
 * **Typescript** - `v4.7.4`
 * **@nestjs/cli** - ` "^v9.0.0`
 
-
+## environment variables for database sql Server
+  ### .env
+    PORT_SERVER=4000
+    URL_HOST=http://localhost
+    SQL_SERVER_HOST= sql-server-db
+    SQL_SERVER_PORT= 1433
+    SQL_SERVER_USER= sa
+    SQL_SERVER_PASSWORD= MiContrasena2022!
+    SQL_SERVER_DATABASE=blog
+    
 ## Install by Docker
   ### required Docker
   
