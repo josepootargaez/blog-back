@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsInt, Min, IsDate } from 'class-validator';
+import { IsNotEmpty, IsString, IsInt, Min } from 'class-validator';
 
 export class RegistroDto {
   @IsNotEmpty({ message: 'title is required' })
@@ -14,6 +14,6 @@ export class RegistroDto {
   content: string;
 
   @IsNotEmpty({ message: 'date is required' })
-  @IsDate({ message: 'Invalid date format' })
+  @IsString({ message: 'date must be String' })
   date: Date;
 }
