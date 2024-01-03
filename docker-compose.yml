@@ -1,21 +1,47 @@
-version: '3'
+version: '3.8'
+
 services:
-  node-app:
-    build: .
+  nest-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: blog-back
-    restart: always
+
     ports:
       - "4000:4000"
-    volumes:
-      - ./src:/usr/app/
-    depends_on:
-      - mongo
-    environment:
-      - MONGO_URI=mongodb://mongo:27017/blogDB
+    networks:
+      - my-network
 
-  mongo:
-    image: mongo
-    container_name: mi_mongo
-    restart: always
+    depends_on:
+      - sql-server-db
+
+    command: sh -c "npm run start:dev"
+
+    environment:
+      SQL_SERVER_HOST: sql-server-db
+      SQL_SERVER_PORT: 1433
+      SQL_SERVER_USER: sa
+      SQL_SERVER_PASSWORD: MiContrasena2022!
+      SQL_SERVER_DATABASE: blog
+
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: sql-server-container
+    environment:
+      SA_PASSWORD: "MiContrasena2022!"
+      ACCEPT_EULA: "Y"
     ports:
-      - "27017:27017"
+      - "1433:1433"
+    networks:
+      - my-network
+    volumes:
+       - ./sql-scripts:/docker-entrypoint-initdb.d
+    command: >
+      /bin/bash -c "
+      /opt/mssql/bin/sqlservr & 
+      sleep 40s && 
+      /opt/mssql-tools/bin/sqlcmd -U sa -P MiContrasena2022! -d master -i /docker-entrypoint-initdb.d/init.sql && tail -f /dev/null"
+    # command: ["/bin/sh", "-c", "/opt/mssql-tools/bin/sqlcmd -N -S sql-server-container -U sa -P MiContrasena2022! -d master -i /var/opt/mssql/init.sql"]
+networks:
+  my-network:
+    driver: bridge

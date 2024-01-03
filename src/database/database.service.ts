@@ -2,6 +2,7 @@
 
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as sql from 'mssql';
+require("dotenv").config();
 
 @Injectable()
 export class DatabaseService  {
@@ -9,10 +10,10 @@ export class DatabaseService  {
 
   private async connect() {
     const config: sql.config = {
-      user: 'root',
-      password: '123456789',
-      server: 'localhost',
-      database: 'blog',
+      user: process?.env?.SQL_SERVER_USER ? process.env.SQL_SERVER_USER : 'sa',
+      password:  process?.env?.SQL_SERVER_PASSWORD ? process.env.SQL_SERVER_PASSWORD :'MiContrasena2022!',
+      server: process?.env?.SQL_SERVER_HOST ? process.env.SQL_SERVER_HOST :'sql-server-db',
+      database: process?.env?.SQL_SERVER_DATABASE ? process.env.SQL_SERVER_DATABASE :'blog',
       options: {
         encrypt: true,
         trustServerCertificate: true,
