@@ -30,6 +30,10 @@ export class BlogService {
 
         try {
           const createdBlog = new this.BlogModel(createCatDto);
+          const res = await this.BlogModel.find({title:createCatDto.title}).exec();
+          if(res.length > 0){
+            throw new Error("El titulo ingresado ya existe");
+          }
           const result:Blog = await createdBlog.save();
           const obj:response={
             success:true,

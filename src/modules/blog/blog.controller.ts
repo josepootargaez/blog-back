@@ -17,7 +17,7 @@ export class blogController {
   @Post('blog')
   async postBlog(@Body() body:Blog) : Promise<response>  {
         const result = await this.appService.create(body);
-        return result
+        return result;
   }
 
   @Get('')
