@@ -43,6 +43,10 @@ let BlogService = class BlogService {
     async create(createCatDto) {
         try {
             const createdBlog = new this.BlogModel(createCatDto);
+            const res = await this.BlogModel.find({ title: createCatDto.title }).exec();
+            if (res.length > 0) {
+                throw new Error("El titulo ingresado ya existe");
+            }
             const result = await createdBlog.save();
             const obj = {
                 success: true,
